@@ -30,11 +30,9 @@ class DepComponent {}
 
 @core.Component({
   selector: 'mock-component',
-  template: '<h1 *ngIf="flag"><dep-component></dep-component></h1>',
+  template: '<dep-component></dep-component>',
 })
-class MockComponent {
-  public flag = true;
-}
+class MockComponent {}
 
 describe('issue-333', () => {
   describe('1:keep', () => {
