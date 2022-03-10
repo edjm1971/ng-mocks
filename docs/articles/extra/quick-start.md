@@ -155,14 +155,27 @@ Then, if someone deletes `AppSearchModule` the test fails too.
 
 [`ngMocks.guts`](../api/ngMocks/guts.md) works like that: it accepts 3 parameters, each one is optional.
 
-Its first parameter accepts things we want to test and, therefore, to keep as they are (avoid mocks).
-The second parameter accepts things out of which we want to create mocks.
-For example, if we have passed a module there, its declarations (guts), will be turned into mocks, except the things
-from the first parameter.
+- 1st parameter accepts things we want to test as they are (these are not mocked).
 
-It might be needed to exclude some declarations from the guts.
-For example, an imported module, or a directive, or services.
-The third parameter comes here for help. What has been passed into it will be excluded from the guts.
+- 2nd parameter accepts things out of which we want to create mocks of (these are the guts).
+
+- 3rd parameter accepts things to exclude from the mocks which are created from the 2nd parameter.
+
+For example, take a look at the following.
+```ts
+TestBed.configureTestingModule(
+  ngMocks.guts(
+    AppBaseComponent, // <- kept as it is.
+    [AppBaseModule, AppModule], // <- create mocks of these
+    ...  // <- These would be excluded from the 2nd but it is unclear.
+    // How would it know from which of the 2nd parameter array would it apply to.
+    // What would an example of this look like?
+  ),
+);
+```
+In the above 1st parameter we specify we are testing the AppBaseComponent.
+In the 2nd parameter we specify the AppBaseComponent dependencies which are AppBaseModule and AppModule in order to create the mocks of them.
+In the 3rd paremeter we are for example purpose we are saying to NOT mock the feature/method/property of AppModule and instead use this value....
 
 Any parameter can be `null` to neglect it, or an array if we want to pass more than one thing.
 
